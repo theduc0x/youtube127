@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.SearchFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/abl_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:elevation="0dp"
+        app:elevation="0dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tb_nav_search"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:menu="@menu/menu_voice_search">
+
+            <ImageButton
+                android:id="@+id/ib_back_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/me_15dp"
+                android:src="@drawable/baseline_arrow_back_ios_new_black_24"
+                android:background="@drawable/custom_button_transparent"/>
+
+            <EditText
+                android:id="@+id/et_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_5dp"
+                android:background="@color/bg_edittext"
+                android:layout_marginEnd="@dimen/me_10dp"
+                android:paddingStart="@dimen/padding_10dp"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:hint="@string/title_search"/>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_list_hint_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/abl_nav"
+        android:layout_marginTop="@dimen/mt_10dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+tools:context=".fragment.BottomSheetDialogSearchSelect">
+
+<LinearLayout
+    android:id="@+id/ll_open_filter_search"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/padding_5dp"
+    android:paddingBottom="@dimen/padding_10dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="?android:attr/selectableItemBackground"
+    android:orientation="horizontal"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/iv_check_sort_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/ms_10dp"
+        android:src="@drawable/baseline_sort_black_24"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="@dimen/padding_20dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/black"
+        android:text="Search Filter"/>
+</LinearLayout>
+
+<LinearLayout
+    android:id="@+id/ll_feedBack"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/padding_5dp"
+    android:paddingBottom="@dimen/padding_10dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="?android:attr/selectableItemBackground"
+    android:orientation="horizontal"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/iv_feedBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/ms_10dp"
+        android:src="@drawable/baseline_help_outline_black_24"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="@dimen/padding_20dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/black"
+        android:text="Help and Feedback"/>
+</LinearLayout>
+
+<View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="@color/line_horizontal"/>
+
+<LinearLayout
+    android:id="@+id/ll_cancel_filter"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/padding_5dp"
+    android:paddingBottom="@dimen/padding_10dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="?android:attr/selectableItemBackground"
+    android:orientation="horizontal"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/iv_cancel_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/ms_10dp"
+        android:src="@drawable/baseline_close_black_24"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="@dimen/padding_20dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/black"
+        android:text="Cancel"/>
+</LinearLayout>
+
+</LinearLayout>

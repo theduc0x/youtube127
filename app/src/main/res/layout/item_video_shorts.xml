@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/info_ww"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+        android:id="@+id/ypv_shorts"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+<!--    <ProgressBar-->
+<!--        android:id="@+id/pb_loading_shorts"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"/>-->
+
+    <LinearLayout
+        android:id="@+id/ll_group_channel_shorts"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintWidth_percent="0.8"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="@dimen/mb_20dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civ_logo_channel_shorts"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_youtube"/>
+        <TextView
+            android:id="@+id/tv_title_channel_shorts"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ms_10dp"
+            android:layout_marginEnd="@dimen/me_10dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textSize_18dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="Khoa phamsssssssssssssssssssssssss"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_subscribe_shorts"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:background="@color/red"
+            android:text="Subscribe"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="20dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/mb_short_item_50dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/ib_like_shorts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_button_transparent"
+                android:src="@drawable/baseline_thumb_up_white_36"/>
+            <TextView
+                android:id="@+id/tv_like_count_shorts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:text="41 N"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/mb_short_item_50dp"
+            android:gravity="center_horizontal"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/ib_dislike_shorts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_button_transparent"
+                android:src="@drawable/baseline_thumb_down_white_36"/>
+            <TextView
+                android:id="@+id/tv_dislike_count_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:text="Dislike"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/mb_short_item_50dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/ib_comment_shorts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_button_transparent"
+                android:src="@drawable/baseline_comment_white_36"/>
+
+            <TextView
+                android:id="@+id/tv_comment_count_shorts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:text="497"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/mb_short_item_50dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+            <ImageButton
+                android:id="@+id/ib_share_shorts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_button_transparent"
+                android:src="@drawable/baseline_share_white_36"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:text="Share"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/mb_short_item_50dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/ib_more_shorts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_button_transparent"
+                android:src="@drawable/baseline_more_horiz_white_36"/>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_list_shorts"
+            android:layout_width="@dimen/iv_width_40dp"
+            android:layout_height="@dimen/iv_height_40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="@dimen/mb_20dp"
+            android:background="@drawable/custom_imageview_shorts"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_account" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_desc_shorts"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintWidth_percent="0.8"
+        app:layout_constraintStart_toStartOf="parent"
+        android:paddingStart="2dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toTopOf="@id/ll_group_channel_shorts"
+        android:textSize="18dp"
+        android:textColor="@color/white"
+        android:text="ágasfjhasfj"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,57 @@
+<resources>
+    <string name="app_name">YoutubeApp</string>
+    <string name="title_menu_notification">Notification</string>
+    <string name="title_menu_search">Search</string>
+    <string name="title_menu_account">Account</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="titile_menu_home">Home</string>
+    <string name="titile_menu_explore">Explore</string>
+    <string name="titile_menu_subcription">Subcription</string>
+    <string name="titile_menu_library">Library</string>
+    <string name="tv_comment_name">Bình luận</string>
+    <string name="tv_content_rule">Hãy nhớ tôn trọng người dùng khác khi đăng bình luận và tuân thủ Nguyên tắc cộng đồng của chúng tôi</string>
+    <string name="space_line"> • </string>
+    <string name="tv_editor">(editor)</string>
+    <string name="search_channel">Search</string>
+    <string name="option_channel">Option</string>
+    <string name="title_sort_playlist">sort by</string>
+    <string name="text_test">Nhạc Chill Học Bài - Những Bản Nhạc Baroque Giúp Tập Trung Học Tập - Nhạc Không Lời Thư Giãn #14</string>
+    <string name="title_activity_video_play_list">VideoPlayListActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="tv_not_channel_feature">This channel doesn\'t feature any other channels.</string>
+    <string name="tv_desc_about_channel">Decription</string>
+    <string name="tv_test_content_desc">TinCoder Android Java là một kênh YouTube chia sẻ những kinh nghiệm của bản thân mình trong lĩnh vực lập trình ứng dụng Android - với ngôn ngữ Java Bằng những kinh nghiệm thực tế khi đi làm, đã từng tham gia nhiều dự án Outsourcing cho cả khách hàng trong nước và ngoài nước, mình rất muốn chia sẻ và giới thiệu những kiến thức của mình về lập trình đến tất cả mọi người. Rất mong mọi người ủng hộ và góp ý cho mình bằng cách Subscribe kênh YouTube của mình, like, share, comment những video mình chia sẻ. Cám ơn tất cả mọi người !!! Thông tin liên hệ: mixproduction29932@gmail.com</string>
+    <string name="tv_link_about">Links</string>
+    <string name="tv_details_about">Details</string>
+    <string name="tv_link_youtube_test">https://www.youtube.com/c/Optimus96/about</string>
+    <string name="tv_test_location">Việt Nam</string>
+    <string name="tv_published_channel">Joined</string>
+    <string name="tv_link_url_youtube_1">https://www.youtube.com/channel/</string>
+    <string name="tv_link_url_youtube_2">https://www.youtube.com/c/</string>
+    <string name="tv_title_view">views</string>
+    <string name="bt_sort_by">SORT BY</string>
+    <string name="tv_play_list">PHÁT</string>
+    <string name="tv_play_list_random">PHÁT NGẪU NHIÊN</string>
+    <string name="tv_view">views •</string>
+    <string name="title_voice">Voice</string>
+    <string name="title_search">Search</string>
+    <string name="url_image_transparent">https://st.quantrimang.com/photos/image/2020/07/30/Hinh-Nen-Trang-10.jpg</string>
+    <string name="tv_name_comment_turnoff">Comments are turned off. Learn more</string>
+    <string name="tv_not_results_search">Try different keywords or remove search filters</string>
+    <string name="tv_no_results">No results found</string>
+    <string name="tv_title_dont_miss_video">Sign in to see updates from your favorite Youtube channels</string>
+    <string name="bt_sign_in">sign in</string>
+    <string name="tv_notifi_title">You notifications live here</string>
+    <string name="tv_notifi_content">Subscribe to your favorite channels to get notified about their latest videos</string>
+    <string name="tv_sub_dont">Don\'t miss new video</string>
+    <string name="tv_libarary_title">Enjoy your favorite videos</string>
+    <string name="tv_library_content">Sign in to access videos that you\'ve liked or saved</string>
+</resources>

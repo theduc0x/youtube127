@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/ll_item_open_playlist_search"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="?android:attr/selectableItemBackground"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="280dp">
+
+        <ImageView
+            android:id="@+id/iv_item_video"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_280dp"
+            android:scaleType="centerCrop"/>
+
+        <LinearLayout
+            android:layout_width="@dimen/width_180dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:background="@color/black_opacity"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_item_count_playlist_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="12"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_playlist_play_white_24"/>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/padding_10dp"
+        android:paddingEnd="@dimen/padding_10dp"
+        android:paddingTop="@dimen/padding_10dp"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="9"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_title_playlist_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:textSize="14dp"
+                android:textColor="@color/black"
+                android:text="@string/text_test"
+                />
+            <TextView
+                android:id="@+id/tv_title_channel_in_playlist_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="trấn thành town"/>
+
+            <TextView
+                android:id="@+id/tv_video_count_playlist_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12 video"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_select_option_video_channel__search"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/baseline_more_vert_black_24"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>

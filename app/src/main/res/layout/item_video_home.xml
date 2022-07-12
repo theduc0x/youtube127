@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/cl_item_click"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="?android:attr/selectableItemBackground"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <FrameLayout
+        android:id="@+id/fl_contain_iv_video"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_item_video"
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
+            android:scaleType="centerCrop"/>
+
+        <TextView
+            android:id="@+id/tv_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/me_5dp"
+            android:layout_marginBottom="@dimen/mb_5dp"
+            android:layout_gravity="right|bottom"
+            android:background="@drawable/custom_bg_tv_duration"
+            android:textSize="@dimen/textSize_14dp"
+            android:textColor="@color/white"
+            android:text="11:00"/>
+    </FrameLayout>
+
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/civ_logo_channel"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        app:layout_constraintWidth_percent="0.15"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fl_contain_iv_video"
+        android:layout_marginTop="10dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?android:attr/selectableItemBackground" />
+
+    <TextView
+        android:id="@+id/tv_title_video"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintWidth_percent="0.7"
+        app:layout_constraintLeft_toRightOf="@id/civ_logo_channel"
+        app:layout_constraintTop_toBottomOf="@id/fl_contain_iv_video"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="10dp"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textSize="13dp"
+        android:textColor="@color/black"
+       />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        app:layout_constraintWidth_percent="0.7"
+        app:layout_constraintLeft_toRightOf="@id/civ_logo_channel"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_video"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_title_channel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="120dp"
+            android:layout_marginEnd="@dimen/ms_5dp"
+            android:layout_marginStart="@dimen/ms_3dp"
+            android:textSize="@dimen/textSize_12dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="Dân ca miền tây"/>
+
+        <TextView
+            android:id="@+id/tv_view_video"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ms_5dp"
+            android:textSize="@dimen/textSize_12dp"
+            android:text=". 4.6M views"/>
+
+        <TextView
+            android:id="@+id/tv_time_video"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textSize_12dp"
+            android:text=". 9 months ago"/>
+
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/iv_setting_video"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        app:layout_constraintWidth_percent="0.15"
+        app:layout_constraintLeft_toRightOf="@id/tv_title_video"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fl_contain_iv_video"
+
+        android:layout_marginTop="@dimen/mt_10dp"
+        android:src="@drawable/baseline_more_vert_black_18"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.ChannelHomeFragment">
+
+<!--    <androidx.core.widget.NestedScrollView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent">-->
+
+
+    <ImageView
+        android:id="@+id/iv_banner_channel"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_youtube"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_banner_channel"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civ_logo_Channel_home"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/baseline_search_black_48"/>
+
+        <TextView
+            android:id="@+id/tv_title_channel_home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:text="Thanh Hưng Official"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_subscribe_channel_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/red"
+            android:textSize="18dp"
+            android:background="@drawable/custom_button_transparent"
+            android:text="ĐĂNG KÝ"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tv_sub_count_channel_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="991 N"/>
+            <TextView
+                android:id="@+id/tv_name_sub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text=" subscribers • "/>
+            <TextView
+                android:id="@+id/tv_video_count_channel_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="80"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text=" video"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_introduce_channel_home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="4dp"
+            android:weightSum="10">
+
+            <TextView
+                android:id="@+id/tv_introduce_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="9"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:text="Xin chào mọi người, mình là Máy Bay đây.
+Đây là kênh vlog cá nhân mới của mình, mình sẽ làm video hàng tuần về cuộc sống thường ngày của mình hay những thứ mình yêu thích như công nghệ, mua sắm làm đẹp các thứ trong cuộc sống, vì mình cực kỳ cực kỳ yêu cái đẹp và hiện đại."/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/baseline_navigate_next_black_36"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+<!--    </androidx.core.widget.NestedScrollView>-->
+</androidx.constraintlayout.widget.ConstraintLayout>

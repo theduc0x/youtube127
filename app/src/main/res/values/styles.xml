@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ActionButton" parent="@android:style/Widget.ActionButton">
+        <item name="android:minWidth">20dip</item>
+        <item name="android:padding">0dip</item>
+    </style>
+</resources>

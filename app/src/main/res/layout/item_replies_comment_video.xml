@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_open_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?android:attr/selectableItemBackground"
+        android:paddingBottom="20dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civ_logo_author_replies_item"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="15dp"
+            android:layout_weight="1"
+            android:src="@drawable/baseline_home_black_48" />
+
+        <TextView
+            android:id="@+id/tv_author_name_replies_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/civ_logo_author_replies_item"
+            android:maxWidth="150dp"
+            android:text="Liên Xô • " />
+
+        <TextView
+            android:id="@+id/tv_date_diff_replies_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/tv_author_name_replies_item"
+            android:text="4 tuần trước" />
+
+        <TextView
+            android:id="@+id/tv_editor_replies_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/tv_date_diff_replies_item"
+            android:text="@string/tv_editor"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/iv_more_select_replies_item"
+            android:layout_width="40dp"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/baseline_more_vert_black_18" />
+
+        <TextView
+            android:id="@+id/tv_cmt_content_replies_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_author_name_replies_item"
+            android:layout_marginRight="20dp"
+            android:layout_toRightOf="@id/civ_logo_author_replies_item"
+            android:ellipsize="end"
+            android:maxLines="5"
+            android:text="vô tình nghe được ở story facebook của một người bạn và phải mò qua đây nghe bản full vì quá hay" />
+
+        <ImageButton
+            android:id="@+id/ib_like_cmt_replies_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_cmt_content_replies_item"
+            android:layout_marginTop="15dp"
+            android:layout_toRightOf="@id/civ_logo_author_replies_item"
+            android:background="@drawable/custom_button_transparent"
+            android:src="@drawable/baseline_thumb_up_black_18" />
+
+        <ImageButton
+            android:id="@+id/ib_dislike_cmt_replies_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_cmt_content_replies_item"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="15dp"
+            android:layout_toRightOf="@id/ib_like_cmt_replies_item"
+            android:background="@drawable/custom_button_transparent"
+            android:src="@drawable/baseline_thumb_down_black_18" />
+
+        <TextView
+            android:id="@+id/tv_like_count_cmt_replies_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_cmt_content_replies_item"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="16dp"
+            android:layout_toRightOf="@id/ib_like_cmt_replies_item"
+            android:text="4,6K"
+            android:textSize="12dp" />
+
+    </RelativeLayout>
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bt_list_replies"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/transparent"
+        android:textAllCaps="true"
+        android:textColor="@color/blue"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+</LinearLayout>

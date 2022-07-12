@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/mn_home_channel"
+        android:icon="@drawable/baseline_home_black_48"
+        app:showAsAction="ifRoom"
+        android:title="@string/titile_menu_home"/>
+
+    <item
+        android:id="@+id/mn_explore_channel"
+        android:icon="@drawable/baseline_explore_black_48"
+        app:showAsAction="ifRoom"
+        android:title="@string/titile_menu_explore"/>
+
+    <item
+        android:id="@+id/mn_subcription_channel"
+        android:icon="@drawable/baseline_subscriptions_black_48"
+        app:showAsAction="ifRoom"
+        android:title="@string/titile_menu_subcription"/>
+
+    <item
+        android:id="@+id/mn_notification_channel"
+        android:icon="@drawable/baseline_notifications_black_48"
+        app:showAsAction="ifRoom"
+        android:title="@string/title_menu_notification"/>
+
+    <item
+        android:id="@+id/mn_library_channel"
+        android:icon="@drawable/baseline_video_library_black_48"
+        app:showAsAction="ifRoom"
+        android:title="@string/titile_menu_library"/>
+</menu>

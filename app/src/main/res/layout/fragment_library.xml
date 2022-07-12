@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.LibraryFragment">
+
+    <ImageView
+        android:id="@+id/iv_sub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/margin_60dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_folder"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_sub"
+        android:paddingStart="@dimen/padding_40dp"
+        android:paddingEnd="@dimen/padding_40dp"
+        android:layout_marginTop="@dimen/margin_60dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/textSize_18dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:text="@string/tv_libarary_title"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textSize_16dp"
+            android:gravity="center"
+            android:text="@string/tv_library_content"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_sign_in"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/mt_20dp"
+            android:background="@color/blue"
+            android:textColor="@color/white"
+            android:text="@string/bt_sign_in"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

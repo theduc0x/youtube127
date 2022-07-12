@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragment.BottomSheetDiaLogSortVideoFragment">
+
+    <LinearLayout
+        android:id="@+id/ll_sort_date_newest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/mt_5dp"
+        android:layout_marginBottom="@dimen/mb_10dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?android:attr/selectableItemBackground"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/iv_check_sort_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/ms_10dp"
+            android:src="@drawable/baseline_check_black_24"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingStart="@dimen/padding_20dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:text="Date added (newest)"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_sort_most_popular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/mt_5dp"
+        android:layout_marginBottom="@dimen/mb_10dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?android:attr/selectableItemBackground"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/iv_check_sort_most"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/ms_10dp"
+            android:visibility="invisible"
+            android:src="@drawable/baseline_check_black_24"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingStart="@dimen/padding_20dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:text="Most popular"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line_horizontal"/>
+
+    <LinearLayout
+        android:id="@+id/ll_cancel_sort"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/mt_5dp"
+        android:layout_marginBottom="@dimen/mb_10dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?android:attr/selectableItemBackground"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/iv_cancel_sort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/ms_10dp"
+            android:src="@drawable/baseline_close_black_24"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingStart="@dimen/padding_20dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:text="Cancel"/>
+    </LinearLayout>
+
+</LinearLayout>

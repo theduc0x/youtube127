@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/ll_open_video_play_from_listplay"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/padding_10dp"
+    android:paddingRight="@dimen/padding_10dp"
+    android:paddingTop="@dimen/padding_5dp"
+    android:paddingBottom="@dimen/padding_5dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="?android:attr/selectableItemBackground"
+    android:orientation="horizontal"
+    android:weightSum="10">
+
+    <ImageView
+        android:id="@+id/iv_thumbnail_video_in_playlist"
+        android:layout_width="0dp"
+        android:layout_height="95dp"
+        android:layout_weight="4.5"
+        android:scaleType="centerCrop" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="85dp"
+        android:layout_weight="5.5"
+        android:layout_marginStart="@dimen/ms_5dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title_video_in_playlist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:textAllCaps="true"
+            android:textSize="@dimen/textSize_14dp"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tv_title_channel_in_playlist_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_view_count_video_in_playlist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_view"/>
+
+            <TextView
+                android:id="@+id/tv_time_diff_date_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_select_option_video_channel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_more_vert_black_24"/>
+</LinearLayout>

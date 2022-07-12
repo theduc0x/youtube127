@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activitys.MainActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/abl_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_scrollFlags="scroll|enterAlways"
+        android:background="@color/white">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tb_nav"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:menu="@menu/menu_toolbar">
+
+            <ImageView
+                android:id="@+id/iv_youtube"
+                android:layout_width="@dimen/width_100dp"
+                android:layout_height="@dimen/height_50dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_youtube"/>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_anchorGravity="bottom">
+            <FrameLayout
+                android:id="@+id/fl_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/mb_50dp">
+            </FrameLayout>
+    </LinearLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bnv_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:itemBackground="@color/white"
+        app:itemIconTint="@color/custom_color_bottom_nav"
+        app:itemTextColor="@color/custom_color_bottom_nav"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/menu_bottom"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

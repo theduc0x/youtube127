@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/mn_like"
+        android:icon="@drawable/baseline_thumb_up_black_48"
+        app:showAsAction="ifRoom"
+        android:title="Like"/>
+
+    <item
+        android:id="@+id/mn_dislike"
+        android:icon="@drawable/baseline_thumb_down_black_48"
+        app:showAsAction="ifRoom"
+        android:title="Dislike"/>
+
+    <item
+        android:id="@+id/mn_share"
+        android:icon="@drawable/baseline_share_black_48"
+        app:showAsAction="ifRoom"
+        android:title="Share"/>
+
+    <item
+        android:id="@+id/mn_download"
+        android:icon="@drawable/baseline_download_for_offline_black_48"
+        app:showAsAction="ifRoom"
+        android:title="Download"/>
+
+    <item
+        android:id="@+id/mn_save"
+        android:icon="@drawable/round_collections_bookmark_black_48"
+        app:showAsAction="ifRoom"
+        android:title="Save"/>
+</menu>

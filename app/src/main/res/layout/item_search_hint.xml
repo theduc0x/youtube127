@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/ll_open_search_hint"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/padding_10dp"
+    android:paddingRight="@dimen/padding_10dp"
+    android:paddingTop="@dimen/padding_10dp"
+    android:paddingBottom="@dimen/padding_10dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="?android:attr/selectableItemBackground"
+    android:orientation="horizontal"
+    android:weightSum="10">
+
+    <LinearLayout
+        android:id="@+id/ll_open_search"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="9"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/sharp_history_black_24"/>
+        <TextView
+            android:id="@+id/tv_hint_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingStart="@dimen/padding_25dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="tincoder"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/ib_get_hint"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:src="@drawable/sharp_north_west_black_24"/>
+
+
+</LinearLayout>
