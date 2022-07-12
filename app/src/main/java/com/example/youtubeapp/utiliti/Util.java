@@ -32,7 +32,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Util {
-    final public static String API_KEY = "AIzaSyAsaDOu8Oj7aXgXWmYOnemy5kHtsUkVZjU";
+    final public static String API_KEY = "AIzaSyDkEdU_hnItFhVO0yDBS758w4FFDIWDuzg";
     final public static String ID_PLAYLIST = "PL8A83124F1D79BD4F";
     final public static String urlListVideoMostPopular = "https://youtube.googleapis.com/youtube/v3/videos?part=snippet&part=statistics&chart=mostPopular&locale=vn&regionCode=vn&key=AIzaSyDkEdU_hnItFhVO0yDBS758w4FFDIWDuzg&maxResults=50";
     public static int REQUEST_CODE_VIDEO = 123;

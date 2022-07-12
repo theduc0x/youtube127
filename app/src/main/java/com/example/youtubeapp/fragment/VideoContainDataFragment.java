@@ -6,6 +6,8 @@ import android.os.Bundle;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -13,6 +15,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -30,6 +33,7 @@ import com.example.youtubeapp.model.itemrecycleview.VideoItem;
 import com.example.youtubeapp.model.listcomment.Comment;
 import com.example.youtubeapp.model.listcomment.ItemsComment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -40,6 +44,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class VideoContainDataFragment extends Fragment {
+
     RelativeLayout rlGroup, rlOpenChannel;
     LinearLayout llDisplayDesc, llCommentGroup;
     TextView tvTitleVideoPlay, tvViewVideoPlay, tvTimeVideoPlay, tvTurnOffComment;
@@ -52,6 +57,12 @@ public class VideoContainDataFragment extends Fragment {
     String timePublic;
     String likeCount, commentCount;
     String descVideo, idChannel,dateDayDiff;
+    ConstraintLayout clBSDesc;
+    BottomSheetBehavior sheetBehavior;
+    TextView tvTitleVideoDesc, tvViewCountVideoDesc, tvPublishAtDesc, tvDateYearVideoDesc;
+    CircleImageView civLogoChannelDesc;
+    TextView tvTitleChannelVideoDesc, tvLikeCountVideo, tvDesc;
+    Toolbar tbCancel;
     VideoItem itemVideo;
     SearchItem itemVideoS;
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -89,6 +100,8 @@ public class VideoContainDataFragment extends Fragment {
                     ArrayList<Itemss> listItem = channel.getItems();
                     Picasso.get().load(listItem.get(0).getSnippet().getThumbnails().getMedium().getUrl())
                             .into(civLogoChannel);
+                    Picasso.get().load(listItem.get(0).getSnippet().getThumbnails().getMedium().getUrl())
+                            .into(civLogoChannelDesc);
                     if (listItem.get(0).getStatistics().getSubscriberCount() == null) {
                         sub = "";
                         tvSubscription.setVisibility(View.INVISIBLE);
@@ -170,6 +183,49 @@ public class VideoContainDataFragment extends Fragment {
         tvCmtContent = view.findViewById(R.id.tv_comment_video);
         rlOpenChannel = view.findViewById(R.id.rl_channel_click);
         tvTurnOffComment = view.findViewById(R.id.tv_comment_off);
+
+        // BottomSheet Desc
+        clBSDesc = view.findViewById(R.id.cl_bottom_sheet_desc);
+        sheetBehavior = BottomSheetBehavior.from(clBSDesc);
+        civLogoChannelDesc = view.findViewById(R.id.civ_logo_channel_desc);
+        tvTitleVideoDesc = view.findViewById(R.id.tv_title_video_desc);
+        tvTitleChannelVideoDesc = view.findViewById(R.id.tv_title_channel_desc);
+        tvViewCountVideoDesc = view.findViewById(R.id.tv_view_video_desc);
+        tvLikeCountVideo = view.findViewById(R.id.tv_like_video_desc);
+        tvPublishAtDesc = view.findViewById(R.id.tv_date_dm_desc);
+        tvDateYearVideoDesc = view.findViewById(R.id.tv_date_year_desc);
+        tvDesc = view.findViewById(R.id.tv_display_video_desc);
+        tbCancel = view.findViewById(R.id.tb_desc_video);
+    }
+
+    public void getTime(String dateOne) {
+        String startDate = dateOne.substring(0, 10);
+
+        String days = startDate.substring(8,10);
+        String month = startDate.substring(5,7);
+        String year = startDate.substring(0,4);
+
+        tvPublishAtDesc.setText(days + " thg " + month);
+        tvDateYearVideoDesc.setText(year);
+    }
+
+    private void setDataBSDesc() {
+        tvTitleVideoDesc.setText(titleVideo);
+        tvViewCountVideoDesc.setText(viewCount);
+        tvLikeCountVideo.setText(likeCount);
+        getTime(timePublic);
+        tvTitleChannelVideoDesc.setText(titleChannel);
+        tvDesc.setText(descVideo);
+
+        tbCancel.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.menu_close_desc) {
+                    sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                }
+                return false;
+            }
+        });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -210,6 +266,8 @@ public class VideoContainDataFragment extends Fragment {
         // call api lấy logo channel
         callApiChannel(idChannel);
         callApiComment(idVideo);
+        // set dữ liệu lên description
+        setDataBSDesc();
         // Set dữ liệu lên view
         tvTitleVideoPlay.setText(titleVideo);
         tvTitleChannelVideo.setText(titleChannel);
@@ -229,7 +287,11 @@ public class VideoContainDataFragment extends Fragment {
         llDisplayDesc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clickOpenBottomSheetDialogFragment();
+                if(sheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED){
+                    sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                } else {
+                    sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                }
             }
 
         });
@@ -257,14 +319,6 @@ public class VideoContainDataFragment extends Fragment {
 
     }
 
-    // Click open desc
-    private void clickOpenBottomSheetDialogFragment() {
-        BottomSheetDialogDescFragment bottomSheetDialogDescFragment =
-                BottomSheetDialogDescFragment.newInstance(itemVideo, itemVideoS);
-        bottomSheetDialogDescFragment.show(getChildFragmentManager(),
-                bottomSheetDialogDescFragment.getTag());
-
-    }
     // Add thêm phần video liên quan
     private void addFragmentRelatedVideo() {
         FragmentManager fragmentManager = getChildFragmentManager();
