@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingStart="@dimen/padding_40dp"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -38,6 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/tv_author_name_replies_item"
+            android:textColor="@color/black"
             android:text="4 tuần trước" />
 
         <TextView
@@ -67,6 +70,7 @@
             android:layout_toRightOf="@id/civ_logo_author_replies_item"
             android:ellipsize="end"
             android:maxLines="5"
+            android:textColor="@color/black"
             android:text="vô tình nghe được ở story facebook của một người bạn và phải mò qua đây nghe bản full vì quá hay" />
 
         <ImageButton

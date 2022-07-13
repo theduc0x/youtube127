@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.example.youtubeapp.R;
 public class NotificationFragment extends Fragment {
-
+    public static final String TAG = NotificationFragment.class.getName();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

@@ -1,29 +1,47 @@
 package com.example.youtubeapp.fragment;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.youtubeapp.R;
+import com.example.youtubeapp.activitys.VideoPlayActivity;
+import com.example.youtubeapp.adapter.CommentYoutubeAdapter;
+import com.example.youtubeapp.adapter.RepliesCommentAdapter;
+import com.example.youtubeapp.model.itemrecycleview.CommentItem;
+import com.example.youtubeapp.model.itemrecycleview.RepliesCommentItem;
 import com.example.youtubeapp.model.itemrecycleview.SearchItem;
+import com.example.youtubeapp.model.listcomment.RepliesComment;
+import com.example.youtubeapp.model.listreplies.ItemsR;
+import com.example.youtubeapp.model.listreplies.Replies;
+import com.example.youtubeapp.my_interface.IItemOnClickCommentListener;
+import com.example.youtubeapp.my_interface.PaginationScrollListener;
 import com.example.youtubeapp.utiliti.Util;
 import com.example.youtubeapp.activitys.ChannelActivity;
 import com.example.youtubeapp.api.ApiServicePlayList;
@@ -52,19 +70,61 @@ public class VideoContainDataFragment extends Fragment {
     CircleImageView civLogoChannel, civLogoUser;
     TextView tvTitleChannelVideo, tvSubscription, tvCommentCount, tvCmtContent;
     AppCompatButton btSubscribe;
+    // Biến dùng chung
     String idVideo, titleVideo, titleChannel;
     String viewCount;
     String timePublic;
     String likeCount, commentCount;
     String descVideo, idChannel,dateDayDiff;
+    VideoItem itemVideo;
+    SearchItem itemVideoS;
+    // Bottom Sheet Desc
     ConstraintLayout clBSDesc;
-    BottomSheetBehavior sheetBehavior;
+    BottomSheetBehavior sheetBehaviorDesc;
     TextView tvTitleVideoDesc, tvViewCountVideoDesc, tvPublishAtDesc, tvDateYearVideoDesc;
     CircleImageView civLogoChannelDesc;
     TextView tvTitleChannelVideoDesc, tvLikeCountVideo, tvDesc;
     Toolbar tbCancel;
-    VideoItem itemVideo;
-    SearchItem itemVideoS;
+    // Bottom Sheet Comment
+    ConstraintLayout clBSCmt;
+    BottomSheetBehavior sheetBehaviorCmt;
+    private TextView tvTotalCmtCount;
+    private RecyclerView rvListComment;
+    CommentYoutubeAdapter adapterCmt;
+    Toolbar tbCommentVideo;
+    ProgressDialog progressDialog;
+    VideoPlayActivity videoPlayActivity;
+    ArrayList<CommentItem> listCmtItem;
+    ArrayList<CommentItem> listAdd;
+    ArrayList<CommentItem> listAddS = new ArrayList<>();
+    private int LoadPage = 1;
+    private String pageToken = "";
+    private boolean isLoading;
+    private boolean isLastPage;
+    private int totalPage = 5;
+    private int currenPage = 1;
+
+    // Bottom Sheet Replies
+    ConstraintLayout clBSReplies;
+    BottomSheetBehavior sheetBehaviorRep;
+    ArrayList<RepliesCommentItem> listReplies;
+    ArrayList<RepliesCommentItem> listAddR;
+    ArrayList<RepliesCommentItem> listAddSR = new ArrayList<>();
+    RelativeLayout rlOpenKeyboard;
+    RecyclerView rvListReplies;
+    RepliesCommentAdapter adapterReplies;
+    Toolbar tbReplies;
+    String parentId;
+    ImageButton ibBackCmt;
+
+    private String pageTokenR = "";
+    private boolean isLoadingR;
+    private boolean isLastPageR;
+    private int totalPageR = 5;
+    private int currentPageR = 1;
+
+
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -80,6 +140,42 @@ public class VideoContainDataFragment extends Fragment {
                 openChannel();
             }
         });
+        // Ib Back replies
+        ibBackCmt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sheetBehaviorRep.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            }
+        });
+
+        tbCommentVideo.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.mn_close_comment:
+                        sheetBehaviorCmt.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                        break;
+                    case R.id.mn_sort_comment:
+                        popupMenu();
+                        break;
+                }
+                return false;
+            }
+        });
+        tbReplies.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.mn_close_replies:
+                        sheetBehaviorCmt.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                        sheetBehaviorRep.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                        break;
+                }
+                return false;
+            }
+        });
+
+
         return view;
     }
     // Api lấy thông tin channel, ở đây chỉ lấy ảnh của channel
@@ -186,7 +282,7 @@ public class VideoContainDataFragment extends Fragment {
 
         // BottomSheet Desc
         clBSDesc = view.findViewById(R.id.cl_bottom_sheet_desc);
-        sheetBehavior = BottomSheetBehavior.from(clBSDesc);
+        sheetBehaviorDesc = BottomSheetBehavior.from(clBSDesc);
         civLogoChannelDesc = view.findViewById(R.id.civ_logo_channel_desc);
         tvTitleVideoDesc = view.findViewById(R.id.tv_title_video_desc);
         tvTitleChannelVideoDesc = view.findViewById(R.id.tv_title_channel_desc);
@@ -196,6 +292,27 @@ public class VideoContainDataFragment extends Fragment {
         tvDateYearVideoDesc = view.findViewById(R.id.tv_date_year_desc);
         tvDesc = view.findViewById(R.id.tv_display_video_desc);
         tbCancel = view.findViewById(R.id.tb_desc_video);
+
+        // Bottom Sheet Comment
+        clBSCmt = view.findViewById(R.id.cl_bottom_sheet_comment);
+        sheetBehaviorCmt = BottomSheetBehavior.from(clBSCmt);
+        tvTotalCmtCount = view.findViewById(R.id.tv_comment_count_video_main);
+        rvListComment = view.findViewById(R.id.rv_list_comment);
+        listCmtItem = new ArrayList<>();
+        tbCommentVideo = view.findViewById(R.id.tb_comment_video);
+        videoPlayActivity = (VideoPlayActivity) getActivity();
+        listAddS.add(new CommentItem(""));
+
+        // Bottom Sheet Replies
+        clBSReplies = view.findViewById(R.id.fl_bottom_sheet_replies);
+        sheetBehaviorRep = BottomSheetBehavior.from(clBSReplies);
+        sheetBehaviorRep.setDraggable(false);
+        listReplies = new ArrayList<>();
+        rvListReplies = view.findViewById(R.id.rv_item_replies);
+        tbReplies = view.findViewById(R.id.tb_replies_video);
+        rlOpenKeyboard = view.findViewById(R.id.rl_open_replies_keyboard);
+        ibBackCmt = view.findViewById(R.id.ib_back_comment);
+        listAddSR.add(new RepliesCommentItem());
     }
 
     public void getTime(String dateOne) {
@@ -221,7 +338,7 @@ public class VideoContainDataFragment extends Fragment {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.menu_close_desc) {
-                    sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    sheetBehaviorDesc.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 }
                 return false;
             }
@@ -287,10 +404,10 @@ public class VideoContainDataFragment extends Fragment {
         llDisplayDesc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(sheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED){
-                    sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                if(sheetBehaviorDesc.getState() != BottomSheetBehavior.STATE_EXPANDED){
+                    sheetBehaviorDesc.setState(BottomSheetBehavior.STATE_EXPANDED);
                 } else {
-                    sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    sheetBehaviorDesc.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 }
             }
 
@@ -301,22 +418,22 @@ public class VideoContainDataFragment extends Fragment {
         } else {
             llCommentGroup.setVisibility(View.VISIBLE);
             tvTurnOffComment.setVisibility(View.GONE);
+
             llCommentGroup.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    clickOpenCommentDialogFragment();
+                    if(sheetBehaviorCmt.getState() != BottomSheetBehavior.STATE_EXPANDED){
+                        resetData();
+                        setDataComment();
+                        LoadPage = 1;
+                        sheetBehaviorCmt.setState(BottomSheetBehavior.STATE_EXPANDED);
+                    } else {
+                        sheetBehaviorCmt.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    }
                 }
 
             });
         }
-
-    }
-    // Mở số comment
-    private void clickOpenCommentDialogFragment() {
-        BottomSheetDialogCommentFragment dialog =
-                BottomSheetDialogCommentFragment.newInstance(idVideo, commentCount);
-        dialog.show(getChildFragmentManager(), dialog.getTag());
-
     }
 
     // Add thêm phần video liên quan
@@ -336,5 +453,347 @@ public class VideoContainDataFragment extends Fragment {
         openToChannel.putExtra(Util.EXTRA_ID_CHANNEL_TO_CHANNEL, idChannel);
         openToChannel.putExtra(Util.EXTRA_TITLE_CHANNEL_TO_CHANNEL, titleChannel);
         startActivity(openToChannel);
+    }
+//  Bottom Sheet Comment
+    private void setDataComment() {
+        int cmtCountD = Integer.valueOf(commentCount);
+        if (cmtCountD % 10 != 0) {
+            totalPage = (cmtCountD / 10) + 1;
+        } else {
+            totalPage = (cmtCountD / 10);
+        }
+
+        tvTotalCmtCount.setText(Util.convertViewCount(Double.parseDouble(commentCount)));
+        if (idVideo == null) {
+            return;
+        }
+
+        // Sự kiện click hiển thị list replies
+        adapterCmt = new CommentYoutubeAdapter( new IItemOnClickCommentListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onClickItemComment(CommentItem commentItem) {
+                if(sheetBehaviorRep.getState() != BottomSheetBehavior.STATE_EXPANDED){
+                    resetDataR();
+                    setDataRep(commentItem);
+                    sheetBehaviorRep.setState(BottomSheetBehavior.STATE_EXPANDED);
+                } else {
+                    sheetBehaviorRep.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                }
+            }
+
+        });
+
+        LinearLayoutManager linearLayoutManager =
+                new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
+        RecyclerView.ItemDecoration decoration =
+                new DividerItemDecoration(getActivity(), RecyclerView.VERTICAL);
+        rvListComment.setLayoutManager(linearLayoutManager);
+        rvListComment.addItemDecoration(decoration);
+        rvListComment.setNestedScrollingEnabled(false);
+        rvListComment.setAdapter(adapterCmt);
+
+        setFirstDataR();
+
+        rvListComment.addOnScrollListener(new PaginationScrollListener(linearLayoutManager) {
+            @Override
+            public void loadMoreItem() {
+                isLoading = true;
+                currenPage += 1;
+                loadNextPage();
+            }
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+            @Override
+            public boolean isLastPage() {
+                return isLastPage;
+            }
+        });
+    }
+
+    private void setFirstDataR() {
+        listCmtItem = null;
+        callApiComment(idVideo, pageToken, "relevance", "10");
+    }
+
+
+    // Set propress bar load data
+    private void setProgressBar() {
+        if (currenPage < totalPage) {
+            adapterCmt.addFooterLoading();
+        } else {
+            isLastPage = true;
+        }
+    }
+    // Load dữ liệu của page tiếp theo
+    private void loadNextPage() {
+                if (LoadPage == 1) {
+                    callApiComment(idVideo, pageToken, "relevance", "10");
+                    isLoading = false;
+                } else if (LoadPage == 2) {
+                    callApiComment(idVideo, pageToken, "time", "10");
+                    isLoading = false;
+                }
+    }
+
+    private void callApiComment(String id, String nextPageToken, String order, String maxResults) {
+        listAdd = new ArrayList<>();
+        ApiServicePlayList.apiServicePlayList.comment(
+                nextPageToken,
+                "snippet",
+                "replies",
+                order,
+                "id",
+                "plainText",
+                id,
+                Util.API_KEY,
+                maxResults
+        ).enqueue(new Callback<Comment>() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onResponse(Call<Comment> call, Response<Comment> response) {
+                String authorLogoUrl = "", authorName = "", publishAt = "", updateAt = "",
+                        displayContentCmt = "", dateDiff = "", authorIdChannel = "", idComment = "";
+                int likeCount = 0, totalRepliesCount = 0;
+                RepliesComment repliesComment;
+
+                Comment comment = response.body();
+                if (comment != null) {
+
+                    pageToken = comment.getNextPageToken();
+                    ArrayList<ItemsComment> listItem = comment.getItems();
+                    for (int i = 0; i < listItem.size(); i++) {
+                        idComment = listItem.get(i).getId();
+                        authorLogoUrl = listItem.get(i).getSnippet()
+                                .getTopLevelComment().getSnippet()
+                                .getAuthorProfileImageUrl();
+                        authorName = listItem.get(i).getSnippet()
+                                .getTopLevelComment().getSnippet()
+                                .getAuthorDisplayName();
+                        publishAt = listItem.get(i).getSnippet()
+                                .getTopLevelComment().getSnippet()
+                                .getPublishedAt();
+                        updateAt = listItem.get(i).getSnippet()
+                                .getTopLevelComment().getSnippet()
+                                .getUpdatedAt();
+                        if (listItem.get(i).getSnippet()
+                                .getTopLevelComment().getSnippet()
+                                .getAuthorChannelId() == null) {
+                            authorIdChannel = "";
+                        } else {
+                            authorIdChannel = listItem.get(i).getSnippet()
+                                    .getTopLevelComment().getSnippet()
+                                    .getAuthorChannelId().getValue();
+                        }
+                        displayContentCmt = listItem.get(i).getSnippet()
+                                .getTopLevelComment().getSnippet()
+                                .getTextDisplay();
+                        likeCount = listItem.get(i).getSnippet()
+                                .getTopLevelComment().getSnippet()
+                                .getLikeCount();
+                        totalRepliesCount = listItem.get(i).getSnippet().getTotalReplyCount();
+                        repliesComment = listItem.get(i).getReplies();
+
+
+                        // Thêm vào list
+
+                        listAdd.add(new CommentItem(
+                                idComment, displayContentCmt, authorName, authorLogoUrl,
+                                authorIdChannel, String.valueOf(likeCount), publishAt,
+                                updateAt, String.valueOf(totalRepliesCount), repliesComment));
+                    }
+                    if (listCmtItem == null) {
+                        listCmtItem = listAddS;
+//                        listCmtItem = listAdd;
+                        listCmtItem.addAll(listAdd);
+                        adapterCmt.setData(listCmtItem);
+                    } else {
+                        adapterCmt.removeFooterLoading();
+                        listCmtItem.addAll(listAdd);
+                        adapterCmt.notifyDataSetChanged();
+                    }
+                    setProgressBar();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Comment> call, Throwable t) {
+            }
+        });
+    }
+
+
+    private void popupMenu() {
+        PopupMenu popupMenu = new PopupMenu(getActivity(), tbCommentVideo, Gravity.RIGHT);
+        popupMenu.getMenuInflater().inflate(R.menu.menu_sort_comment,
+                popupMenu.getMenu());
+        // Gọi lại 1 hàm setData trong adapter
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch(item.getItemId()) {
+
+                    case R.id.mn_top_cmt:
+                        resetData();
+                        LoadPage = 1;
+                        callApiComment(idVideo, "", "relevance", "10");
+//                        adapter.setData(listCmtItem);
+                        break;
+                    case R.id.mn_new_first:
+                        resetData();
+                        LoadPage = 2;
+                        callApiComment(idVideo, "", "time", "10");
+//                        adapter.setData(listCmtItem);
+                        break;
+                }
+                return false;
+            }
+        });
+        popupMenu.show();
+    }
+    private void resetData() {
+        currenPage = 1;
+        listCmtItem = null;
+        pageToken = "";
+        listAddS = new ArrayList<>();
+        listAddS.add(new CommentItem(""));
+    }
+
+    // Bottom Sheet Replies
+
+    private void resetDataR() {
+        currentPageR = 1;
+        listReplies = null;
+        pageTokenR = "";
+        listAddSR = new ArrayList<>();
+        listAddSR.add(new RepliesCommentItem());
+    }
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void setDataRep(CommentItem itemR) {
+        if (itemR == null) {
+            return;
+        }
+        parentId = itemR.getIdComment();
+
+        int cmtCountD = Integer.valueOf(itemR.getTotalReplyCount());
+        if (cmtCountD % 10 != 0) {
+            totalPageR = (cmtCountD / 10) + 1;
+        } else {
+            totalPageR = (cmtCountD / 10);
+        }
+
+        LinearLayoutManager linearLayoutManager =
+                new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
+        rvListReplies.setLayoutManager(linearLayoutManager);
+        adapterReplies = new RepliesCommentAdapter(itemR);
+        rvListReplies.setAdapter(adapterReplies);
+        rvListReplies.setNestedScrollingEnabled(false);
+
+        setFirstDataPo();
+
+        rvListReplies.addOnScrollListener(new PaginationScrollListener(linearLayoutManager) {
+            @Override
+            public void loadMoreItem() {
+                isLoadingR = true;
+                currentPageR += 1;
+                loadNextPageR();
+            }
+            @Override
+            public boolean isLoading() {
+                return isLoadingR;
+            }
+            @Override
+            public boolean isLastPage() {
+                return isLastPageR;
+            }
+        });
+
+    }
+
+    private void setFirstDataPo() {
+        listReplies = null;
+        callApiReplies(pageTokenR, parentId, "10");
+    }
+
+
+    // Set propress bar load data
+    private void setProgressBarR() {
+        if (currentPageR < totalPageR) {
+            adapterReplies.addFooterLoading();
+        } else {
+            isLastPageR = true;
+        }
+    }
+    // Load dữ liệu của page tiếp theo
+    private void loadNextPageR() {
+                callApiReplies(pageTokenR, parentId, "10");
+                isLoadingR = false;
+    }
+
+
+    public void callApiReplies(String nextPageToken, String parentId, String maxResults) {
+        listAddR = new ArrayList<>();
+        ApiServicePlayList.apiServicePlayList.replies(
+                nextPageToken,
+                "snippet",
+                maxResults,
+                parentId,
+                "plainText",
+                Util.API_KEY
+        ).enqueue(new Callback<Replies>() {
+
+            @Override
+            public void onResponse(Call<Replies> call, Response<Replies> response) {
+                Replies replies = null;
+                String authorLogoUrl = "", authorName = "", publishAt = "", updateAt = "",
+                        displayContentCmt = "", authorIdChannel = "";
+                String likeCount = "";
+                replies = response.body();
+                if (replies != null) {
+                    pageTokenR = replies.getNextPageToken();
+                    ArrayList<ItemsR> listItem = replies.getItems();
+                    for (int i = 0; i < listItem.size(); i++) {
+                        authorLogoUrl = listItem.get(i).getSnippet().getAuthorProfileImageUrl();
+                        authorName = listItem.get(i).getSnippet()
+                                .getAuthorDisplayName();
+                        publishAt = listItem.get(i).getSnippet()
+                                .getPublishedAt();
+                        updateAt = listItem.get(i).getSnippet()
+                                .getUpdatedAt();
+                        authorIdChannel = listItem.get(i).getSnippet()
+                                .getAuthorChannelId().getValue();
+                        displayContentCmt = listItem.get(i).getSnippet()
+                                .getTextDisplay();
+                        likeCount = String.valueOf(listItem.get(i).getSnippet()
+                                .getLikeCount());
+                        Log.d("asfdafsf", likeCount);
+                        listAddR.add(new RepliesCommentItem(
+                                displayContentCmt, authorName, authorLogoUrl,
+                                authorIdChannel, likeCount, publishAt, updateAt
+                        ));
+
+                    }
+                    if (listReplies == null) {
+                        listReplies = listAddSR;
+                        listReplies.addAll(listAddR);
+                        adapterReplies.setData(listReplies);
+                    } else {
+                        adapterReplies.removeFooterLoading();
+                        listReplies.addAll(listAddR);
+                        adapterReplies.notifyDataSetChanged();
+                    }
+                    setProgressBarR();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<Replies> call, Throwable t) {
+
+            }
+        });
     }
 }

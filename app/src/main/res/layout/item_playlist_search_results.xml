@@ -14,7 +14,7 @@
         android:layout_height="280dp">
 
         <ImageView
-            android:id="@+id/iv_item_video"
+            android:id="@+id/iv_item_video_playlist_search"
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_280dp"
             android:scaleType="centerCrop"/>

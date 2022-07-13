@@ -11,39 +11,35 @@
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:paddingBottom="10dp"
-        android:layout_marginTop="10dp"
+        android:paddingTop="@dimen/padding_10dp"
         android:background="@color/comment"
         android:text="@string/tv_content_rule"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="15dp"
+        android:paddingLeft="10dp"
         android:paddingRight="15dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="@dimen/mb_5dp"
         android:gravity="center"
         android:orientation="horizontal">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/civ_user_logo"
-            android:layout_width="40dp"
-            android:layout_height="50dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:src="@drawable/ic_account"/>
 
         <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginLeft="5dp"
-            android:background="@null"
+            android:layout_marginStart="@dimen/ms_15dp"
+            android:padding="@dimen/padding_5dp"
+            android:background="@color/bg_edittext"
             android:textSize="15dp"
             android:hint="Viết bình luận..."/>
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="2px"
-        android:layout_marginTop="10dp"
-        android:background="@color/grey" />
 
 </LinearLayout>

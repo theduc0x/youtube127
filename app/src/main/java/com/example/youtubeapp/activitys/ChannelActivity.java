@@ -99,16 +99,16 @@ public class ChannelActivity extends AppCompatActivity {
                     case R.id.mn_home_channel:
                         getSupportFragmentManager().popBackStack(HomeFragment.TAG, 0);
                         break;
-                    case R.id.mn_explore:
+                    case R.id.mn_explore_channel:
 
                         break;
-                    case R.id.mn_subcription:
+                    case R.id.mn_subcription_channel:
 
                         break;
-                    case R.id.mn_notification:
+                    case R.id.mn_notification_channel:
 
                         break;
-                    case R.id.mn_library:
+                    case R.id.mn_library_channel:
 
                         break;
                 }

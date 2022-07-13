@@ -19,19 +19,22 @@
             android:id="@+id/civ_logo_author"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="15dp"
             android:layout_weight="1"
-            android:src="@drawable/baseline_home_black_48"/>
+            android:src="@drawable/baseline_home_black_48" />
 
         <TextView
             android:id="@+id/tv_author_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/civ_logo_author"
             android:layout_marginTop="10dp"
-            android:text="Liên Xô • "/>
+            android:layout_toRightOf="@id/civ_logo_author"
+            android:maxWidth="150dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="Liên Xô • " />
 
         <TextView
             android:id="@+id/tv_date_diff"
@@ -39,17 +42,20 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/tv_author_name"
-            android:text="4 tuần trước"/>
+            android:paddingTop="2dp"
+            android:textColor="@color/black"
+            android:text="4 tuần trước"
+            android:textSize="@dimen/textSize_12dp" />
 
         <TextView
             android:id="@+id/tv_editor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_marginLeft="5dp"
-            android:visibility="invisible"
+            android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/tv_date_diff"
-            android:text="@string/tv_editor"/>
+            android:text="@string/tv_editor"
+            android:visibility="invisible" />
 
         <ImageView
             android:id="@+id/iv_more_select"
@@ -64,11 +70,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_author_name"
-            android:layout_toRightOf="@id/civ_logo_author"
             android:layout_marginRight="20dp"
-            android:maxLines="5"
+            android:layout_toRightOf="@id/civ_logo_author"
+            android:textColor="@color/black"
             android:ellipsize="end"
-            android:text="vô tình nghe được ở story facebook của một người bạn và phải mò qua đây nghe bản full vì quá hay"/>
+            android:maxLines="5"
+            android:text="vô tình nghe được ở story facebook của một người bạn và phải mò qua đây nghe bản full vì quá hay" />
 
         <ImageButton
             android:id="@+id/ib_like_cmt"
@@ -133,7 +140,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginTop="10dp"
-        android:visibility="gone"
+        android:minWidth="0dp"
+        android:insetLeft="0dp"
         android:background="@android:color/transparent"
         android:textSize="@dimen/textSize_15dp"
         android:textAllCaps="true"

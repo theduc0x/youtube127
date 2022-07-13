@@ -54,7 +54,6 @@ public class BottomSheetDialogCommentFragment extends BottomSheetDialogFragment 
     ProgressDialog progressDialog;
     VideoPlayActivity videoPlayActivity;
 
-
     ArrayList<CommentItem> listCmtItem;
     ArrayList<CommentItem> listAdd;
     ArrayList<CommentItem> listAddS = new ArrayList<>();
@@ -147,7 +146,7 @@ public class BottomSheetDialogCommentFragment extends BottomSheetDialogFragment 
         listCmtItem = new ArrayList<>();
         tbCommentVideo = view.findViewById(R.id.tb_comment_video);
         videoPlayActivity = (VideoPlayActivity) getActivity();
-        listAddS.add(new CommentItem(""));
+        listAddS.add(new CommentItem());
     }
 
     private void setDataComment() {

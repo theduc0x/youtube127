@@ -24,6 +24,9 @@ public class RepliesCommentItem {
     public RepliesCommentItem(String authorName) {
         this.authorName = authorName;
     }
+    public RepliesCommentItem() {
+
+    }
 
     public String getTextDisplay() {
         return textDisplay;

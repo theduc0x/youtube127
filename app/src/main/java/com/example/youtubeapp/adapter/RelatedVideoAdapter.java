@@ -43,8 +43,9 @@ class Loading2ViewHolder extends RecyclerView.ViewHolder {
 class ItemViewHolder extends RecyclerView.ViewHolder {
     ImageView ivItemVideo, ivSettingVideo;
     CircleImageView civLogoChannel;
-    TextView tvTitleVideo, tvTitleChannel, tvViewCountVideo, tvTimeVideo, tvDuration;
+    TextView tvTitleVideo, tvTitleChannel, tvViewCountVideo, tvTimeVideo;
     ConstraintLayout clItemClick;
+    TextView tvDuration;
 
     public ItemViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -138,7 +139,6 @@ public class RelatedVideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             String descVideo = item.getDescVideo();
             String idChannel = item.getIdChannel();
             String idVideo = item.getIdVideo();
-            String duration = item.getDuration();
             String urlLogoChannel;
             if (item.getUrlLogoChannel().equals("")) {
                 urlLogoChannel = "https://st.quantrimang.com/photos/image/2020/07/30/Hinh-Nen-Trang-10.jpg";
@@ -152,12 +152,7 @@ public class RelatedVideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             viewHolder.tvTitleChannel.setText(titleChannel);
             Picasso.get().load(urlLogoChannel).into(viewHolder.civLogoChannel);
             viewHolder.tvTimeVideo.setText(dateDayDiff);
-            if (!duration.equals("")) {
-                Duration d = Duration.parse(duration);
-                long s = d.getSeconds();
-                String durationI = Util.changeDuration(s);
-                viewHolder.tvDuration.setText(durationI);
-            }
+
             viewHolder.clItemClick.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -174,12 +169,12 @@ public class RelatedVideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemCount() {
-        if (items != null) {
-            return items.size();
-        }
-        return 0;
+        return items.size();
     }
 
+    public void setLoaded() {
+        isLoading = false;
+    }
 
     private void callApiDetailVideo(String idVideo, ItemViewHolder holder, VideoItem item) {
         ApiServicePlayList.apiServicePlayList.detailVideo(
@@ -192,28 +187,29 @@ public class RelatedVideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onResponse(Call<DetailVideo> call, Response<DetailVideo> response) {
-                String urlThumbnailVideo = "", titleVideo = "", titleChannel = "",
-                        timeVideo = "", viewCountVideo = "", commentCount = "",
-                        idVideo = "", likeCountVideo = "", duration = "";
+                String duration = "",
+                        timeVideo = "", viewCountVideo = "", commentCount = "", likeCountVideo = "";
 
                 DetailVideo detailVideo = response.body();
                 if (detailVideo != null) {
                     ArrayList<ItemVideo> listItem = detailVideo.getItems();
 
                     viewCountVideo = listItem.get(0).getStatistics().getViewCount();
+                    duration = listItem.get(0).getContentDetails().getDuration();
+                    item.setDuration(duration);
+                    Duration d = Duration.parse(duration);
+                    String durationI = Util.changeDuration(d.getSeconds());
+                    holder.tvDuration.setText(durationI);
+
                     item.setViewCountVideo(Util.convertViewCount(Double.parseDouble(viewCountVideo)));
                     holder.tvViewCountVideo
-                            .setText("• " + Util.convertViewCount(Double.parseDouble(viewCountVideo)) +
-                                    " views •");
+                            .setText("• " + Util.convertViewCount(Double.parseDouble(viewCountVideo)) + " views •");
                     commentCount = listItem.get(0).getStatistics().getCommentCount();
                     item.setCommentCount(commentCount);
 
                     likeCountVideo = listItem.get(0).getStatistics().getLikeCount();
                     item.setLikeCountVideo(likeCountVideo);
 
-                    duration = listItem.get(0).getContentDetails().getDuration();
-                    item.setDuration(duration);
-                    notifyDataSetChanged();
                 }
             }
 

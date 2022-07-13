@@ -30,9 +30,57 @@ import de.hdodenhof.circleimageview.CircleImageView;
 // View Holder khi loading
 class LoadingViewHolder extends RecyclerView.ViewHolder {
     ProgressBar progressBar;
+
     public LoadingViewHolder(@NonNull View itemView) {
         super(itemView);
         progressBar = itemView.findViewById(R.id.pb_loading);
+    }
+}
+
+// View Holder tiêu đề của view
+class ItemInReplies extends RecyclerView.ViewHolder {
+    TextView tvNameReceive, tvDateDiffReceive, tvEditor;
+    TextView tvContentReceive, likeCountReceive, repliesCountReceive;
+    CircleImageView civAuthorLogo;
+
+    public ItemInReplies(@NonNull View itemView) {
+        super(itemView);
+        tvNameReceive = itemView.findViewById(R.id.tv_author_name_replies);
+        tvDateDiffReceive = itemView.findViewById(R.id.tv_date_diff_replies);
+        tvContentReceive = itemView.findViewById(R.id.tv_cmt_content_replies);
+        likeCountReceive = itemView.findViewById(R.id.tv_like_count_cmt_replies);
+        repliesCountReceive = itemView.findViewById(R.id.tv_replies_count_replies);
+        tvEditor = itemView.findViewById(R.id.tv_editor_replies);
+        civAuthorLogo = itemView.findViewById(R.id.civ_logo_author_replies);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void setData(CommentItem itemR) {
+        String publishAt = itemR.getPublishedAt();
+        String updateAt = itemR.getUpdateAt();
+        if (!publishAt.equals(updateAt)) {
+            tvEditor.setVisibility(View.VISIBLE);
+        } else {
+            tvEditor.setVisibility(View.GONE);
+        }
+        Picasso.get().load(itemR.getAuthorLogoUrl()).into(civAuthorLogo);
+        tvNameReceive.setText(itemR.getAuthorName());
+        tvContentReceive.setText(itemR.getTextDisplay());
+        tvDateDiffReceive.setText(" • " + Util.getTime(itemR.getPublishedAt()));
+        String likeCount = itemR.getLikeCount();
+        String totalReplies = itemR.getTotalReplyCount();
+        if (likeCount.equals("0")) {
+            likeCountReceive.setVisibility(View.GONE);
+        } else {
+            likeCountReceive.setVisibility(View.VISIBLE);
+            likeCountReceive.setText(Util.convertViewCount(Double.parseDouble(likeCount)));
+        }
+        if (totalReplies.equals("0")) {
+            repliesCountReceive.setVisibility(View.GONE);
+        } else {
+            repliesCountReceive.setVisibility(View.VISIBLE);
+            repliesCountReceive.setText(Util.convertViewCount(Double.parseDouble(itemR.getTotalReplyCount())));
+        }
     }
 }
 
@@ -58,6 +106,7 @@ class RepliesViewHolder extends RecyclerView.ViewHolder {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void setData(RepliesCommentItem replies) {
+        String dateDiff = "";
         if (replies == null) {
             return;
         }
@@ -66,7 +115,9 @@ class RepliesViewHolder extends RecyclerView.ViewHolder {
         String authorName = replies.getAuthorName();
         String publishedAt = replies.getPublishedAt();
         String updateAt = replies.getUpdateAt();
-        String dateDiff = Util.getTime(publishedAt);
+        if (publishedAt != null) {
+            dateDiff  = Util.getTime(publishedAt);
+        }
         String commentContent = replies.getTextDisplay();
         String likeCountCmt = replies.getLikeCount();
 
@@ -75,7 +126,12 @@ class RepliesViewHolder extends RecyclerView.ViewHolder {
         tvAuthorName.setText(authorName);
         tvCommentContent.setText(commentContent);
         tvDateDiff.setText(" • " + dateDiff);
-        tvLikeCountCmt.setText(Util.convertViewCount(Double.parseDouble(likeCountCmt)));
+        if (likeCountCmt.equals("0")) {
+            tvLikeCountCmt.setVisibility(View.GONE);
+        } else {
+            tvLikeCountCmt.setVisibility(View.VISIBLE);
+            tvLikeCountCmt.setText(Util.convertViewCount(Double.parseDouble(likeCountCmt)));
+        }
         if (!publishedAt.equals(updateAt)) {
             tvEditor.setVisibility(View.VISIBLE);
         } else {
@@ -88,8 +144,14 @@ public class RepliesCommentAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     ArrayList<RepliesCommentItem> listReplies;
     private final static int VIEW_TYPE_ITEM = 0,
             VIEW_TYPE_LOADING = 1,
-            VIEW_TYPE_DESC = 2;;
+            VIEW_TYPE_DESC = 2;
+    ;
     boolean isLoadingAdd;
+    private CommentItem items;
+
+    public RepliesCommentAdapter(CommentItem items) {
+        this.items = items;
+    }
 
     public void setData(ArrayList<RepliesCommentItem> listReplies) {
         this.listReplies = listReplies;
@@ -103,7 +165,11 @@ public class RepliesCommentAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             View view = LayoutInflater.from(parent.getContext()).inflate(
                     R.layout.item_replies_comment_video, parent, false);
             return new RepliesViewHolder(view);
-        } else  {
+        } else if (viewType == VIEW_TYPE_DESC) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(
+                    R.layout.item_in_bottom_sheet_replies, parent, false);
+            return new ItemInReplies(view);
+        } else {
             View view = LayoutInflater.from(parent.getContext()).inflate(
                     R.layout.item_loading, parent, false);
             return new LoadingViewHolder(view);
@@ -118,6 +184,11 @@ public class RepliesCommentAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
             RepliesViewHolder viewHolder = (RepliesViewHolder) holder;
             viewHolder.setData(item);
+        } else if (holder.getItemViewType() == VIEW_TYPE_DESC) {
+            ItemInReplies viewHolder = (ItemInReplies) holder;
+            viewHolder.setData(items);
+        } else {
+            LoadingViewHolder viewHolder = (LoadingViewHolder) holder;
         }
     }
 
@@ -125,14 +196,17 @@ public class RepliesCommentAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public int getItemViewType(int position) {
         if (listReplies != null && position == listReplies.size() - 1 && isLoadingAdd) {
             return VIEW_TYPE_LOADING;
+        } else if (position == 0) {
+            return VIEW_TYPE_DESC;
+        } else {
+            return VIEW_TYPE_ITEM;
         }
-        return VIEW_TYPE_ITEM;
     }
 
     @Override
     public int getItemCount() {
         if (listReplies != null) {
-        return listReplies.size();
+            return listReplies.size();
         }
         return 0;
     }

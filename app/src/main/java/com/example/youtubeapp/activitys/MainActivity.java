@@ -47,8 +47,12 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
     Toolbar tbNav;
     BottomNavigationView bnvFragment;
+    HomeFragment homeFragment = new HomeFragment();
+    ShortsFragment exploreFragment = new ShortsFragment();
+    SubcriptionFragment subcriptionFragment = new SubcriptionFragment();
+    NotificationFragment notificationFragment = new NotificationFragment();
+    LibraryFragment libraryFragment = new LibraryFragment();
     FrameLayout flContent;
-    HomeFragment homeFragment;
     AppBarLayout ablHome;
 
     @Override
@@ -62,12 +66,11 @@ public class MainActivity extends AppCompatActivity {
         flContent = findViewById(R.id.fl_content);
         ablHome = findViewById(R.id.abl_nav);
 
-        homeFragment = new HomeFragment();
-
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.fl_content, homeFragment, "fragHome");
+        fragmentTransaction.replace(R.id.fl_content, homeFragment, Util.TAG_HOME);
         fragmentTransaction.addToBackStack(HomeFragment.TAG);
         fragmentTransaction.commit();
+        Log.d("ducaksd", getSupportFragmentManager().getBackStackEntryCount()+"");
         bnvFragment.getMenu().findItem(R.id.mn_home).setChecked(true);
         // Sự kiện click thanh menu bottom
         bnvFragment.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -79,7 +82,8 @@ public class MainActivity extends AppCompatActivity {
                         setToolBarMainVisible();
                         if (item.isChecked()) {
                             homeFragment = (HomeFragment) getSupportFragmentManager()
-                                    .findFragmentByTag("fragHome");
+                                    .findFragmentByTag(Util.TAG_HOME);
+                            // Nếu lướt quá sâu thì chỉ cần nhấn vào nút home sẽ quay lại ngay lập tức
                             if (homeFragment.rvItemVideo.getAdapter().getItemCount() > 21) {
                                 homeFragment.topRecycleViewFast();
                             } else {
@@ -93,27 +97,30 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.mn_explore:
                         setToolBarMainInvisible();
-                        ShortsFragment exploreFragment = new ShortsFragment();
                         item.setChecked(true);
-                        selectFragment(exploreFragment);
+                        selectFragment(exploreFragment, Util.TAG_SHORTS, ShortsFragment.TAG);
+                        Log.d("ducaksd", getSupportFragmentManager().getBackStackEntryCount()+"");
                         break;
                     case R.id.mn_subcription:
                         setToolBarMainVisible();
-                        SubcriptionFragment subcriptionFragment = new SubcriptionFragment();
+
                         item.setChecked(true);
-                        selectFragment(subcriptionFragment);
+                        selectFragment(subcriptionFragment, Util.TAG_SUB, SubcriptionFragment.TAG);
+                        Log.d("ducaksd", getSupportFragmentManager().getBackStackEntryCount()+"");
                         break;
                     case R.id.mn_notification:
                         setToolBarMainVisible();
-                        NotificationFragment notificationFragment = new NotificationFragment();
+
                         item.setChecked(true);
-                        selectFragment(notificationFragment);
+                        selectFragment(notificationFragment, Util.TAG_NOTIFI, NotificationFragment.TAG);
+                        Log.d("ducaksd", getSupportFragmentManager().getBackStackEntryCount()+"");
                         break;
                     case R.id.mn_library:
                         setToolBarMainVisible();
-                        LibraryFragment libraryFragment = new LibraryFragment();
+
                         item.setChecked(true);
-                        selectFragment(libraryFragment);
+                        selectFragment(libraryFragment, Util.TAG_LIBRARY, LibraryFragment.TAG);
+                        Log.d("ducaksd", getSupportFragmentManager().getBackStackEntryCount()+"");
                         break;
                 }
                 return false;
@@ -138,13 +145,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     // Phương thức chọn fragment khi click menu
-    private void selectFragment(Fragment fragment) {
-        Random random = new Random();
-        float floatNumber = random.nextFloat();
-        int intNumber = random.nextInt();
+    private void selectFragment(Fragment fragment, String tag, String tagBackStack) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fl_content, fragment);
-        fragmentTransaction.addToBackStack(floatNumber + intNumber + "9");
+        fragmentTransaction.replace(R.id.fl_content, fragment, tag);
+        fragmentTransaction.addToBackStack(tagBackStack);
         fragmentTransaction.commit();
     }
 
@@ -166,7 +170,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        HomeFragment fragment = (HomeFragment) getSupportFragmentManager().findFragmentByTag("fragHome");
+        HomeFragment fragment =
+                (HomeFragment) getSupportFragmentManager().findFragmentByTag(Util.TAG_HOME);
         if (fragment != null && fragment.isVisible()) {
             setToolBarMainVisible();
         }

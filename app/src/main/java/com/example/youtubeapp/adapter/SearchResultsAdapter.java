@@ -261,7 +261,7 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         public ItemPlayListViewHolder(@NonNull View itemView) {
             super(itemView);
-            ivThumbnails = itemView.findViewById(R.id.iv_item_video);
+            ivThumbnails = itemView.findViewById(R.id.iv_item_video_playlist_search);
             tvTitleVideo = itemView.findViewById(R.id.tv_title_playlist_search);
             tvTitleChannel = itemView.findViewById(R.id.tv_title_channel_in_playlist_search);
             tvVideoCount = itemView.findViewById(R.id.tv_video_count_playlist_search);

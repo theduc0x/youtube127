@@ -11,13 +11,11 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,35 +31,30 @@ import com.example.youtubeapp.model.listreplies.Replies;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BottomSheetDialogRepliesFragment extends BottomSheetDialogFragment {
-    public static ArrayList<RepliesCommentItem> listReplies;
-    public static ArrayList<RepliesCommentItem> listAdd;
+    ArrayList<RepliesCommentItem> listReplies;
+    ArrayList<RepliesCommentItem> listAddR;
+    ArrayList<RepliesCommentItem> listAddSR = new ArrayList<>();
     CommentItem itemR;
     RelativeLayout rlOpenKeyboard;
-    CircleImageView civReceive;
-    TextView tvNameReceive, tvDateDiffReceive, tvEditor;
-    TextView tvContentReceive, likeCountReceive, repliesCountReceive;
     RecyclerView rvListReplies;
-    RepliesCommentAdapter adapter;
+    RepliesCommentAdapter adapterReplies;
     Toolbar tbReplies;
     String parentId;
     ImageButton ibBackCmt;
 
-
-    private String pageToken = "";
-    private boolean isLoading;
-    private boolean isLastPage;
-    private int totalPage = 5;
-    private int currenPage = 1;
+    private String pageTokenR = "";
+    private boolean isLoadingR;
+    private boolean isLastPageR;
+    private int totalPageR = 5;
+    private int currentPageR = 1;
 
 
     // Khởi tạo fragment dialog với dữ liệu truyền vào là 1 CommentItem
@@ -115,7 +108,7 @@ public class BottomSheetDialogRepliesFragment extends BottomSheetDialogFragment 
 
         // Ánh xạ view và chạy RecycleVIew
         intMain(viewDialog);
-        setData();
+        setDataRep();
 
         ibBackCmt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,72 +138,50 @@ public class BottomSheetDialogRepliesFragment extends BottomSheetDialogFragment 
 
     private void intMain(View view) {
         listReplies = new ArrayList<>();
-        civReceive = view.findViewById(R.id.civ_logo_author_replies);
-        tvNameReceive = view.findViewById(R.id.tv_author_name_replies);
-        tvDateDiffReceive = view.findViewById(R.id.tv_date_diff_replies);
-        tvContentReceive = view.findViewById(R.id.tv_cmt_content_replies);
-        likeCountReceive = view.findViewById(R.id.tv_like_count_cmt_replies);
-        repliesCountReceive = view.findViewById(R.id.tv_replies_count_replies);
         rvListReplies = view.findViewById(R.id.rv_item_replies);
         tbReplies = view.findViewById(R.id.tb_replies_video);
         rlOpenKeyboard = view.findViewById(R.id.rl_open_replies_keyboard);
-        tvEditor = view.findViewById(R.id.tv_editor_replies);
         ibBackCmt = view.findViewById(R.id.ib_back_comment);
+        listAddSR.add(new RepliesCommentItem());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void setData() {
+    private void setDataRep() {
         if (itemR == null) {
             return;
         }
-        String publishAt = itemR.getPublishedAt();
-        String updateAt = itemR.getUpdateAt();
         parentId = itemR.getIdComment();
-
-        Picasso.get().load(itemR.getAuthorLogoUrl()).into(civReceive);
-        tvNameReceive.setText(itemR.getAuthorName());
-        tvContentReceive.setText(itemR.getTextDisplay());
-        tvDateDiffReceive.setText(" • " + Util.getTime(itemR.getPublishedAt()));
-        likeCountReceive.setText(Util.convertViewCount(Double.parseDouble(itemR.getLikeCount())));
-        repliesCountReceive.setText(Util.convertViewCount(Double.parseDouble(itemR.getTotalReplyCount())));
 
         int cmtCountD = Integer.valueOf(itemR.getTotalReplyCount());
         if (cmtCountD % 10 != 0) {
-            totalPage = (cmtCountD / 10) + 1;
+            totalPageR = (cmtCountD / 10) + 1;
         } else {
-            totalPage = (cmtCountD / 10);
+            totalPageR = (cmtCountD / 10);
         }
 
-        if (publishAt.equals(updateAt)) {
-            tvEditor.setVisibility(View.VISIBLE);
-        }
         LinearLayoutManager linearLayoutManager =
                 new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
-        RecyclerView.ItemDecoration decoration =
-                new DividerItemDecoration(getActivity(), RecyclerView.VERTICAL);
-
         rvListReplies.setLayoutManager(linearLayoutManager);
-
-        adapter = new RepliesCommentAdapter();
-        rvListReplies.addItemDecoration(decoration);
-        rvListReplies.setAdapter(adapter);
+        adapterReplies = new RepliesCommentAdapter(itemR);
+        rvListReplies.setAdapter(adapterReplies);
+        rvListReplies.setNestedScrollingEnabled(false);
 
         setFirstDataPo();
 
         rvListReplies.addOnScrollListener(new PaginationScrollListener(linearLayoutManager) {
             @Override
             public void loadMoreItem() {
-                isLoading = true;
-                currenPage += 1;
+                isLoadingR = true;
+                currentPageR += 1;
                 loadNextPage();
             }
             @Override
             public boolean isLoading() {
-                return isLoading;
+                return isLoadingR;
             }
             @Override
             public boolean isLastPage() {
-                return isLastPage;
+                return isLastPageR;
             }
         });
 
@@ -218,16 +189,16 @@ public class BottomSheetDialogRepliesFragment extends BottomSheetDialogFragment 
 
     private void setFirstDataPo() {
         listReplies = null;
-        callApiReplies( pageToken, parentId, "10");
+        callApiReplies(pageTokenR, parentId, "10");
     }
 
 
     // Set propress bar load data
-    private void setProgressBar() {
-        if (currenPage < totalPage) {
-            adapter.addFooterLoading();
+    private void setProgressBarR() {
+        if (currentPageR < totalPageR) {
+            adapterReplies.addFooterLoading();
         } else {
-            isLastPage = true;
+            isLastPageR = true;
         }
     }
     // Load dữ liệu của page tiếp theo
@@ -235,15 +206,15 @@ public class BottomSheetDialogRepliesFragment extends BottomSheetDialogFragment 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                    callApiReplies( pageToken, parentId, "10");
-                    isLoading = false;
+                    callApiReplies(pageTokenR, parentId, "10");
+                    isLoadingR = false;
             }
         },1000);
     }
 
 
     public void callApiReplies(String nextPageToken, String parentId, String maxResults) {
-        listAdd = new ArrayList<>();
+        listAddR = new ArrayList<>();
         ApiServicePlayList.apiServicePlayList.replies(
                 nextPageToken,
                 "snippet",
@@ -261,7 +232,7 @@ public class BottomSheetDialogRepliesFragment extends BottomSheetDialogFragment 
                 String likeCount = "";
                 replies = response.body();
                 if (replies != null) {
-                    pageToken = replies.getNextPageToken();
+                    pageTokenR = replies.getNextPageToken();
                     ArrayList<ItemsR> listItem = replies.getItems();
                     for (int i = 0; i < listItem.size(); i++) {
                         authorLogoUrl = listItem.get(i).getSnippet().getAuthorProfileImageUrl();
@@ -278,21 +249,22 @@ public class BottomSheetDialogRepliesFragment extends BottomSheetDialogFragment 
                         likeCount = String.valueOf(listItem.get(i).getSnippet()
                                 .getLikeCount());
 
-                        listAdd.add(new RepliesCommentItem(
+                        listAddR.add(new RepliesCommentItem(
                                 displayContentCmt, authorName, authorLogoUrl,
                                 authorIdChannel, likeCount, publishAt, updateAt
                         ));
 
                         }
                     if (listReplies == null) {
-                        listReplies = listAdd;
-                        adapter.setData(listReplies);
+                        listReplies = listAddSR;
+                        listReplies.addAll(listAddR);
+                        adapterReplies.setData(listReplies);
                     } else {
-                        adapter.removeFooterLoading();
-                        listReplies.addAll(listAdd);
-                        adapter.notifyDataSetChanged();
+                        adapterReplies.removeFooterLoading();
+                        listReplies.addAll(listAddR);
+                        adapterReplies.notifyDataSetChanged();
                     }
-                    setProgressBar();
+                    setProgressBarR();
                 }
 
             }

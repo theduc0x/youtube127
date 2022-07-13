@@ -51,6 +51,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 
 public class SearchFragment extends Fragment {
+    public static final String TAG = SearchFragment.class.getName();
     private ImageButton ibBack;
     String how;
     EditText etSearch;

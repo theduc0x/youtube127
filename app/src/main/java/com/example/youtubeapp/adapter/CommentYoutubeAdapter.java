@@ -131,14 +131,17 @@ public class CommentYoutubeAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         @RequiresApi(api = Build.VERSION_CODES.O)
 
         void setData(CommentItem item) {
-//            if (item == null) {
-//                return ;
-//            }
+            if (item == null) {
+                return ;
+            }
+            String dateDiff = "";
             String authorLogoUrl = item.getAuthorLogoUrl();
             String authorName = item.getAuthorName();
             String publishedAt = item.getPublishedAt();
             String updateAt = item.getUpdateAt();
-            String dateDiff = Util.getTime(publishedAt);
+            if (!publishedAt.equals("")) {
+               dateDiff  = Util.getTime(publishedAt);
+            }
             String commentContent = item.getTextDisplay();
             String likeCountCmt = item.getLikeCount();
             String repliesCountCmt = item.getTotalReplyCount();
@@ -147,8 +150,18 @@ public class CommentYoutubeAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             tvAuthorName.setText(authorName);
             tvCommentContent.setText(commentContent);
             tvDateDiff.setText(" • " + dateDiff);
-            tvLikeCountCmt.setText(Util.convertViewCount(Double.parseDouble(likeCountCmt)));
-            tvRepliesCount.setText(String.valueOf(repliesCountCmt));
+            if (likeCountCmt.equals("0") || likeCountCmt == null) {
+                tvLikeCountCmt.setVisibility(View.GONE);
+            } else {
+                tvLikeCountCmt.setVisibility(View.VISIBLE);
+                tvLikeCountCmt.setText(Util.convertViewCount(Double.parseDouble(likeCountCmt)));
+            }
+            if (repliesCountCmt.equals("0")) {
+                tvRepliesCount.setVisibility(View.GONE);
+            } else {
+                tvRepliesCount.setVisibility(View.VISIBLE);
+                tvRepliesCount.setText(Util.convertViewCount(Double.parseDouble(repliesCountCmt)));
+            }
             if (!publishedAt.equals(updateAt)) {
                 tvEditor.setVisibility(View.VISIBLE);
             } else {

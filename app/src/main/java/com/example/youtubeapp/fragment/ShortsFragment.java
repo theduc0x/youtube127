@@ -33,6 +33,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ShortsFragment extends Fragment {
+    public static final String TAG = ShortsFragment.class.getName();
     YouTubePlayerView ypvVideo;
     ArrayList<VideoItem> listItems;
     ShortsVideoAdapter adapter;

@@ -60,18 +60,22 @@
                 android:id="@+id/tv_title_video_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/mt_5dp"
+                android:layout_marginBottom="@dimen/mb_10dp"
                 android:textColor="@color/black"
-                android:textSize="13dp"
+                android:fontFamily="@font/roboto_black"
+                android:textSize="@dimen/textSize_14dp"
                 android:textStyle="bold" />
 
             <LinearLayout
                 android:id="@+id/ll_group_channel_desc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_title_video_desc"
                 android:gravity="center"
                 android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_title_video_desc">
+                android:layout_marginBottom="@dimen/mb_5dp">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/civ_logo_channel_desc"
@@ -83,8 +87,9 @@
                     android:id="@+id/tv_title_channel_desc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="@dimen/ms_10dp"
                     android:text="Tincoder Android Java"
+                    android:fontFamily="@font/roboto_black"
                     android:textColor="@color/black"
                     android:textSize="12dp" />
 
@@ -175,17 +180,19 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="14dp"
-                android:background="@color/line_horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ll_group_view_info" />
+                app:layout_constraintTop_toBottomOf="@id/ll_group_view_info"
+                android:background="@color/line_horizontal"
+  />
 
             <TextView
                 android:id="@+id/tv_display_video_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/mt_10dp"
+                android:autoLink="web"
+                android:textColorLink="@color/blue"
                 android:text="hi" />
 
         </LinearLayout>

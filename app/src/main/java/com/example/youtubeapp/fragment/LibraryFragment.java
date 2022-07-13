@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.example.youtubeapp.R;
 
 public class LibraryFragment extends Fragment {
-
+    public static final String TAG = LibraryFragment.class.getName();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
